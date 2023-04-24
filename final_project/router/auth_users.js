@@ -5,11 +5,7 @@ const regd_users = express.Router();
 
 let users = [];
 
-const isValid = (username)=>{ //returns boolean
-//write code to check is the username is valid
-}
-
-const authenticatedUser = (username,password)=>{ //returns boolean
+const isValid = (username,password)=>{ //returns boolean
   let validusers = users.filter((user)=>{
     return (user.username === username && user.password === password)
   });
@@ -29,7 +25,7 @@ regd_users.post("/login", (req,res) => {
       return res.status(404).json({message: "Error logging in"});
   }
 
-  if (authenticatedUser(username,password)) {
+  if (isValid(username,password)) {
     let accessToken = jwt.sign({
       data: password
     }, 'access', { expiresIn: 60 * 60 });
